@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Ignore node_modules in both directories
+/node_modules/
+vue-course-manager/node_modules/
