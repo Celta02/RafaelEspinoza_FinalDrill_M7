@@ -24,7 +24,7 @@
         <v-chip color="green" dark>{{ item.fecha_registro }}</v-chip>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn color="blue" icon @click="editCourse(item)">
+        <v-btn color="blue" icon @click="openEditCourse(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
         <v-btn color="red" icon @click="deleteCourse(item.id)">
@@ -32,6 +32,8 @@
         </v-btn>
       </template>
     </v-data-table>
+
+    <EditCourseModal ref="editCourseModal" :course="selectedCourse" />
 
     <!-- Summary Statistics -->
     <v-row justify="center">
@@ -73,10 +75,11 @@
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import AddCourseModal from '@/components/AddCourseModal.vue';
+import EditCourseModal from '@/components/EditCourseModal.vue';
 
 export default {
   name: 'AdminView',
-  components: { AddCourseModal },
+  components: { AddCourseModal, EditCourseModal },
   computed: {
     ...mapState(['courses']),
     ...mapGetters([
@@ -100,12 +103,14 @@ export default {
         { text: 'Fecha', value: 'fecha_registro' },
         { text: 'Acciones', value: 'actions', sortable: false },
       ],
+      selectedCourse: null,
     };
   },
   methods: {
     ...mapMutations(['deleteCourse']),
-    editCourse(course) {
-      alert(`TODO: Implement Edit Course for ${course.nombre}`);
+    openEditCourse(course) {
+      this.selectedCourse = course;
+      this.$refs.editCourseModal.open();
     },
   },
 };
