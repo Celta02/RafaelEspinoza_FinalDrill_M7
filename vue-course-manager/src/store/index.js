@@ -109,7 +109,9 @@ export default new Vuex.Store({
     totalCourses: state => state.courses.length,
     totalActiveCourses: state => state.courses.filter(course => !course.completado).length,
     totalCompletedCourses: state => state.courses.filter(course => course.completado).length,
+    totalEnrolled: state => state.courses.reduce((total, course) => total + course.inscritos, 0),
     totalAvailableSlots: state =>
         state.courses.reduce((total, course) => total + course.cupos - course.inscritos, 0),
+    totalCapacity: state => state.courses.reduce((total, course) => total + course.cupos, 0),
   },
 });
