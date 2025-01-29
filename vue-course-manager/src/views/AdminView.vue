@@ -27,13 +27,15 @@
         <v-btn color="blue" icon @click="openEditCourse(item)">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
-        <v-btn color="red" icon @click="deleteCourse(item.id)">
+        <v-btn color="red" icon @click="openDeleteCourse(item)">
           <v-icon>mdi-delete</v-icon>
         </v-btn>
       </template>
     </v-data-table>
 
     <EditCourseModal ref="editCourseModal" :course="selectedCourse" />
+    <DeleteCourseModal ref="deleteCourseModal" @courseDeleted="refreshCourses" />
+
 
     <!-- Summary Statistics -->
     <v-row justify="center">
@@ -76,12 +78,15 @@
 import { mapState, mapGetters, mapMutations } from 'vuex';
 import AddCourseModal from '@/components/AddCourseModal.vue';
 import EditCourseModal from '@/components/EditCourseModal.vue';
+import DeleteCourseModal from "@/components/DeleteCourseModal";
 
 export default {
   name: 'AdminView',
-  components: { AddCourseModal, EditCourseModal },
+  components: { AddCourseModal, EditCourseModal, DeleteCourseModal  },
   computed: {
-    ...mapState(['courses']),
+    courses() {
+      return this.$store.state.courses;
+    },
     ...mapGetters([
       'totalCourses',
       'totalActiveCourses',
@@ -112,6 +117,12 @@ export default {
       this.selectedCourse = course;
       this.$refs.editCourseModal.open();
     },
+    openDeleteCourse(course) {
+      this.$refs.deleteCourseModal.open(course);
+    },
+    refreshCourses(){
+      this.$forceUpdate();
+    }
   },
 };
 </script>
