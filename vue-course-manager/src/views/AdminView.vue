@@ -3,12 +3,10 @@
     <!-- Title -->
     <h1 class="text-center mb-4">Administración</h1>
 
-    <!-- Add Course Button (Centered) -->
+    <!-- Add Course Button -->
     <v-row justify="center" class="mb-4">
       <v-col cols="auto">
-        <v-btn color="primary" @click="addCourse">
-          <v-icon left>mdi-plus</v-icon> Agregar Curso
-        </v-btn>
+        <AddCourseModal />
       </v-col>
     </v-row>
 
@@ -35,7 +33,7 @@
       </template>
     </v-data-table>
 
-    <!-- Summary Statistics (Final Layout) -->
+    <!-- Summary Statistics -->
     <v-row justify="center">
       <v-col cols="12" sm="8">
         <v-card class="pa-3 mb-3 d-flex align-center" color="deep-purple lighten-3">
@@ -74,9 +72,11 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex';
+import AddCourseModal from '@/components/AddCourseModal.vue';
 
 export default {
   name: 'AdminView',
+  components: { AddCourseModal },
   computed: {
     ...mapState(['courses']),
     ...mapGetters([
@@ -92,7 +92,7 @@ export default {
     return {
       headers: [
         { text: 'Curso', value: 'nombre' },
-        { text: 'Cupos', value: 'cupos' }, // Newly added
+        { text: 'Cupos', value: 'cupos' },
         { text: 'Inscritos', value: 'inscritos' },
         { text: 'Duración', value: 'duracion' },
         { text: 'Costo', value: 'costo' },
@@ -104,9 +104,6 @@ export default {
   },
   methods: {
     ...mapMutations(['deleteCourse']),
-    addCourse() {
-      alert('TODO: Implement Add Course Modal');
-    },
     editCourse(course) {
       alert(`TODO: Implement Edit Course for ${course.nombre}`);
     },
